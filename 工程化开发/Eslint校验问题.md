@@ -11,12 +11,18 @@ v-for 后添加 :key='item'
 ```
 
 ```
-exceeds the maximum line length of 100. (max-len)
+Expected the maximum line length of 100. (max-len)
 ```
 解决方法：
 ```
-法1. 设置"max-len" : ["error", {code : 300}]
+法1. .eslintrc.js设置'max-len' : ['error', {code : 300}]
 法2. 使用<!-- eslint-disable --><!-- eslint-enable -->包裹
-
 ```
 
+```
+Expected linebreaks to be 'LF' but found 'CRLF'  linebreak-style
+```
+解决方法：
+```
+法1. .eslintrc.js设置'linebreak-style': 0,
+```
