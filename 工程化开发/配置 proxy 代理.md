@@ -24,11 +24,27 @@ dev: {
 在页面调用的时候
 ```
 methods: {
+  // axios版本请求
   async shareFriend() {
     const res = await this.$http.get('/api/business-platform.payment-channel.web/hqpay/gateway/activity/redEnvelope/open');
     console.log(res);
   },
+
+  // fetch版本请求
+  shareFriend2() {
+      fetch('/api/notes/15843394/rewards?count=20')
+      .then((response) => { // 这里拿到的 response 并不是一个  对象
+        return response.json();  // 将 response.body 通过 JSON.parse 转换为 JS 对象
+      })
+      .then(data => {
+        console.log(data); // {name: 'test', age: 1}
+      })
+      .catch(error => {
+        console.log("error：", error);
+      });
+  }
 },
+
 ```
 
 浏览器调用的地址虽然还是 `http://localhost:8080/api/` 但是实际上已经经过切换
