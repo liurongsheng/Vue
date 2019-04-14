@@ -78,3 +78,38 @@ function generateLoaders (loader, loaderOptions) {
 }
 ```
 
+## iview-admin@1.3.1 throw new ERR_INVALID_CALLBACK(); 
+```
+> iview-admin@1.3.1 dev C:\Users\Administrator\Desktop\ylt-system
+> webpack-dev-server --content-base ./ --open --inline --hot --port 8082 --compress --config build/webpack.dev.config.js
+
+Happy[happybabel]: Version: 4.0.1. Threads: 8 (shared pool)
+fs.js:129
+  throw new ERR_INVALID_CALLBACK();
+  ^
+
+TypeError [ERR_INVALID_CALLBACK]: Callback must be a function
+    at maybeCallback (fs.js:129:9)
+    at Object.write (fs.js:536:14)
+    at C:\Users\Administrator\Desktop\ylt-system\build\webpack.dev.config.js:12:6
+    at FSReqWrap.oncomplete (fs.js:141:20)
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! iview-admin@1.3.1 dev: `webpack-dev-server --content-base ./ --open --inline --hot --port 8082 --compress --config build/webpack.dev.config.js`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the iview-admin@1.3.1 dev script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     C:\Users\Administrator\AppData\Roaming\npm-cache\_logs\2019-04-25T01_25_45_555Z-debug.log
+```
+node 版本问题，node v10 以上 fs.write 的callback 是必须的，降低Node版本可解决
+
+将webpack.dev.config.js 和 webpack.prod.config.js 中的代码修改
+
+`fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});`
+
+修改为： 
+
+`fs.write(fd, buf, 0, 'utf-8', function(err, written, buffer) {});`
